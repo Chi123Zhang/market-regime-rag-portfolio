@@ -54,48 +54,6 @@ def _modal_label(labels: list) -> tuple:
     return pred, top_count / len(valid)
 
 
-
-def _regime_diverse_global_order(
-    scores: np.ndarray,
-    past_mask: np.ndarray,
-    record_labels: np.ndarray,
-    top_k: int,
-    pool_multiplier: int = 10,
-) -> np.ndarray:
-    """
-    Return global record indices with light regime diversity.
-
-    Similarity remains the primary ranking signal, but the selected top-k set is
-    encouraged to include different regime labels when high-similarity examples
-    from those regimes exist in the strict-past candidate pool.
-    """
-    valid_idx = np.where(past_mask & np.isfinite(scores))[0]
-    if top_k <= 0 or len(valid_idx) == 0:
-        return np.array([], dtype=int)
-
-    ranked = valid_idx[np.argsort(-scores[valid_idx])]
-    pool_size = min(len(ranked), max(top_k * pool_multiplier, top_k))
-    pool = ranked[:pool_size]
-
-    selected: list[int] = []
-    regime_priority = ["risk_off", "bear", "high_vol", "bull"]
-
-    for regime in regime_priority:
-        matches = [idx for idx in pool if record_labels[idx] == regime and idx not in selected]
-        if matches:
-            selected.append(matches[0])
-        if len(selected) >= top_k:
-            break
-
-    for idx in ranked:
-        if len(selected) >= top_k:
-            break
-        if idx not in selected:
-            selected.append(idx)
-
-    return np.array(selected[:top_k], dtype=int)
-
-
 def run_walk_forward_inference(
     rag: MarketRegimeRAG,
     start_date: str = "2008-01-01",
@@ -168,9 +126,9 @@ def run_walk_forward_inference(
 
         scores = sim[local_i].copy()
         scores[~past_mask] = -np.inf                      # mask future
-
-        # top_k indices among past records, with light regime diversity
-        order = _regime_diverse_global_order(scores, past_mask, record_labels, top_k)
+        # top_k indices among past records
+        order = np.argpartition(-scores, kth=min(top_k, past_mask.sum()) - 1)[:top_k]
+        order = order[np.argsort(-scores[order])]
 
         retrieved_labels = [record_labels[j] for j in order]
         pred, conf = _modal_label(retrieved_labels)
@@ -181,8 +139,8 @@ def run_walk_forward_inference(
             "true_label":   r["label_consensus"],
             "pred_label":   pred,
             "confidence":   round(float(conf), 4),
-            "n_retrieved":  int(len(order)),
-            "method":       "rule_based_temporal_rag_diverse",
+            "n_retrieved":  int(top_k),
+            "method":       "rule_based_temporal_rag",
         })
 
         if verbose and (local_i + 1) % 200 == 0:
