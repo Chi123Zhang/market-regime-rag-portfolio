@@ -46,7 +46,7 @@ For every window in the back-test period (2008-01-01 → 2025-12-31, ~900 window
 
 1. Build a structured query from the window's metadata (SPY return, vol, VIX, drawdown, credit spread, yield curve).
 2. Retrieve the top-k most-similar past windows with `date < t` — the strict-past temporal mask comes straight from `financial_rag.py`.
-3. Take the modal `label_consensus` of the retrieved windows as the prediction; confidence = vote share.
+3. In the improved version, the final regime prediction is produced by a feature-space balanced KNN classifier, while the retrieved windows provide supporting evidence; confidence reflects the strength of similarity-based voting.
 4. Optionally call the LLM via `--use_llm` (requires `OPENAI_API_KEY`).
 
 The original `financial_rag.MarketRegimeRAG.evaluate_walk_forward` calls the per-window `retrieve()` method, which re-parses every record's date string per query. That dominates runtime (~10 minutes for 900 windows). `regime_inference.run_walk_forward_inference` reuses the *same* TF-IDF matrix but vectorises the retrieval — one `vectorizer.transform` call, one `cosine_similarity` matrix product, then a NumPy mask per row. ~1 second for the same 900 windows. Output is identical.
