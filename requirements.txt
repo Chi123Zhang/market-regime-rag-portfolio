@@ -6,3 +6,5 @@ openai
 pyarrow
 matplotlib
 tqdm
+python-dotenv
+scipy
