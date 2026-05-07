@@ -1,8 +1,5 @@
-streamlit
-pandas
-numpy
-scikit-learn
-openai
-pyarrow
-matplotlib
-tqdm
+pandas>=2.0
+numpy>=1.24
+yfinance>=0.2.40
+pandas-datareader>=0.10
+pyarrow>=14.0      # parquet engine
