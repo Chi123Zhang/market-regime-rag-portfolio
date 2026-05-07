@@ -1,0 +1,20 @@
+Market-windows pipeline summary
+========================================
+
+Panel rows:     5786
+Panel range:    2003-01-02 → 2025-12-30
+Windows built:  1107
+Window step:    every 5 trading days (see config.WINDOW_STEP)
+
+Consensus regime distribution:
+label_consensus
+bull        0.903
+bear        0.064
+high_vol    0.033
+
+Sample corpus record (truncated):
+{
+  "doc_id": "window_2014-12-24",
+  "date": "2014-12-24",
+  "window_start": "2014-09-26",
+  "text": "## Market window 2014-09-26 \u2192 2014-12-24\n\n**Equity (S&P 500 / SPY)**\n- 63-day annualised return: 24.2%\n- 63-day annualised volatility: 14.1%\n- 63-day Sharpe: 1.63\n- Max drawdown inside window: -5.9%\n- 21-day annualised return: 11.0%\n- 21-day annualised volatility: 15.7%\n- Drawdown from trailing 1-year high: 0.0%\n- Above 200-day moving average: yes\n\n**Volatility (VIX)**\n- VIX level at window end: 14.37\n- VIX change over 21 days: 2.12\n\n**Cross-asset**\n- 63-day equity-bond r...
