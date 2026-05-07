@@ -18,7 +18,7 @@ To address this, we build an **end-to-end pipeline**:
 
 * Construct historical market windows
 * Retrieve similar past environments (RAG)
-* Generate regime predictions + explanations
+* Generate regime predictions using a feature-based classifier, supported by retrieved historical evidence and optional LLM explanations
 * Evaluate performance via backtesting
 
 ---
@@ -54,6 +54,12 @@ To address this, we build an **end-to-end pipeline**:
   * Static 60/40
   * SPY Buy & Hold
   * Momentum
+
+## 🔹 Hybrid Decision + Explanation Architecture
+
+* Final regime prediction is produced by a feature-space balanced KNN classifier
+* RAG retrieves similar historical market windows as supporting evidence
+* Optional LLM layer summarizes retrieved evidence without overriding predictions
 
 ---
 
@@ -189,8 +195,9 @@ The app includes four tabs:
 
 ## 3. Inference
 
-* Rule-based or LLM-enhanced prediction
-* Aggregation over retrieved neighbors
+* Feature-space balanced KNN produces the final regime prediction
+* Retrieval (RAG) provides similar historical windows as supporting evidence
+* Optional LLM layer generates structured explanations based on retrieved evidence
 
 ## 4. Evaluation
 
@@ -234,7 +241,7 @@ The app includes four tabs:
 
 # 👤 Author
 
-Chi (Charlie) Zhang
+Chi (Charlie) Zhang  
 M.A. Statistics (Machine Learning Track), Columbia University
 
 ---
