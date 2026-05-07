@@ -19,58 +19,6 @@ except Exception:
 CORPUS_PATH = "data_pipeline/outputs/corpus.jsonl"
 ALLOWED_REGIMES = ["bull", "bear", "high_vol", "risk_off"]
 
-def _regime_diverse_local_order(
-    scores: np.ndarray,
-    candidate_indices: List[int],
-    records: List[Dict[str, Any]],
-    top_k: int,
-    pool_multiplier: int = 10,
-) -> np.ndarray:
-    """
-    Return top-k local indices with light regime diversity.
-
-    This keeps the original similarity ranking as the primary signal, but avoids
-    the common failure mode where the retrieved set is entirely dominated by the
-    majority regime, usually bull. It first looks inside a reasonably large
-    high-similarity candidate pool, selects the best available example from each
-    non-duplicate regime, and then fills remaining slots by similarity order.
-
-    Important: this is post-retrieval diversification; it does not change the
-    temporal mask or introduce future information.
-    """
-    if top_k <= 0 or len(scores) == 0:
-        return np.array([], dtype=int)
-
-    ranked = list(np.argsort(scores)[::-1])
-    pool_size = min(len(ranked), max(top_k * pool_multiplier, top_k))
-    pool = ranked[:pool_size]
-
-    selected: List[int] = []
-    seen_regimes = set()
-
-    # Prefer less frequent / risk-sensitive regimes first, then bull.
-    regime_priority = ["risk_off", "bear", "high_vol", "bull"]
-
-    for regime in regime_priority:
-        for local_idx in pool:
-            global_idx = candidate_indices[local_idx]
-            label = records[global_idx].get("label_consensus", "")
-            if label == regime and local_idx not in selected:
-                selected.append(local_idx)
-                seen_regimes.add(regime)
-                break
-        if len(selected) >= top_k:
-            break
-
-    # Fill remaining slots using the original similarity ranking.
-    for local_idx in ranked:
-        if len(selected) >= top_k:
-            break
-        if local_idx not in selected:
-            selected.append(local_idx)
-
-    return np.array(selected[:top_k], dtype=int)
-
 
 @dataclass
 class RetrievedWindow:
@@ -166,7 +114,7 @@ class MarketRegimeRAG:
         sub_matrix = self.matrix[candidate_indices]
         scores = cosine_similarity(q_vec, sub_matrix).flatten()
 
-        order = _regime_diverse_local_order(scores, candidate_indices, self.records, top_k)
+        order = np.argsort(scores)[::-1][:top_k]
 
         results = []
         for local_idx in order:
