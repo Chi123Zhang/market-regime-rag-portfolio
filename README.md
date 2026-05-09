@@ -381,8 +381,9 @@ pytest tests/test_basic.py
 The tests verify:
 
 - required output files exist
-- metrics files can be loaded
-- regime label outputs contain the expected columns
+- generated metrics are readable
+- regime label outputs contain the expected schema
+- core experiment outputs were successfully generated
 
 ---
 
