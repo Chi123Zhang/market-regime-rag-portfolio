@@ -8,7 +8,7 @@ The main goal of the project is to study whether retrieval-based reasoning can i
 
 ---
 
-# Overview
+#Overview
 
 Traditional market regime models often behave like black boxes and may overfit to dominant market states.  
 This project explores whether retrieving historically similar market environments can provide more stable and interpretable regime predictions.
