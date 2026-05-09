@@ -1,4 +1,4 @@
-# 📊 Market Regime RAG Portfolio
+# Market Regime RAG Portfolio
 
 A temporal-aware Retrieval-Augmented Generation (RAG) system for financial market regime classification and portfolio backtesting.
 
@@ -8,7 +8,7 @@ The main goal of the project is to study whether retrieval-based reasoning can i
 
 ---
 
-# 🚀 Overview
+# Overview
 
 Traditional market regime models often behave like black boxes and may overfit to dominant market states.  
 This project explores whether retrieving historically similar market environments can provide more stable and interpretable regime predictions.
@@ -24,15 +24,15 @@ The project also includes a Streamlit demo application for interactive inference
 
 ---
 
-# 🧠 Main Features
+# Main Features
 
-## 🔹 Temporal-aware Retrieval
+## Temporal-aware Retrieval
 
 - Retrieval only uses historical data before the query date
 - Prevents look-ahead leakage
 - Makes the evaluation more realistic
 
-## 🔹 Balanced Regime Prediction
+## Balanced Regime Prediction
 
 The final prediction is produced using a feature-space balanced KNN classifier.
 
@@ -43,7 +43,7 @@ The system:
 - applies inverse-prior correction
 - reduces bull-market dominance
 
-## 🔹 Explainable Outputs
+## Explainable Outputs
 
 For each prediction, the system returns:
 
@@ -53,7 +53,7 @@ For each prediction, the system returns:
 - supporting evidence
 - optional LLM explanation
 
-## 🔹 Portfolio Backtesting
+## Portfolio Backtesting
 
 The project compares several strategies:
 
@@ -71,7 +71,7 @@ Performance metrics include:
 - maximum drawdown
 - turnover
 
-## 🔹 Reproducible Workflow
+## Reproducible Workflow
 
 The repository contains:
 
@@ -85,7 +85,7 @@ The repository contains:
 
 ---
 
-# 🏗️ Repository Structure
+# Repository Structure
 
 ```text
 market-regime-rag-portfolio/
@@ -119,7 +119,7 @@ market-regime-rag-portfolio/
 
 ---
 
-# ⚙️ Installation
+# Installation
 
 ## 1. Clone the repository
 
@@ -138,7 +138,7 @@ pip install -r requirements.txt
 
 ---
 
-# ▶️ Running the Project
+# Running the Project
 
 ## Step 1: Build the data pipeline (optional)
 
@@ -192,37 +192,37 @@ http://localhost:8501
 
 ---
 
-# 🖥️ Demo Interface
+# Demo Interface
 
 The Streamlit application contains four sections.
 
-## 📌 1. Live RAG Demo
+## 1. Live RAG Demo
 
 - choose a date
 - retrieve similar historical windows
 - generate a regime prediction
 - display supporting evidence
 
-## 📈 2. Backtest Results
+## 2. Backtest Results
 
 - compare strategies
 - display equity curves
 - display drawdowns
 - compare performance metrics
 
-## 🧭 3. Regime Timeline
+## 3. Regime Timeline
 
 - compare predicted regimes with ground truth labels
 - visualize regime transitions over time
 
-## 🏗️ 4. Architecture
+## 4. Architecture
 
 - visualize the pipeline structure
 - explain retrieval and inference flow
 
 ---
 
-# 🔬 Methodology
+# Methodology
 
 ## 1. Data Processing
 
@@ -289,7 +289,7 @@ The evaluation pipeline includes:
 
 ---
 
-# 📊 Example Outputs
+# Example Outputs
 
 The repository includes saved outputs from the backtest.
 
@@ -350,7 +350,7 @@ The figure compares predicted regimes with rule-based ground truth labels.
 
 ---
 
-# ✅ Reproducibility
+# Reproducibility
 
 The repository includes:
 
@@ -368,7 +368,7 @@ python run_backtest.py
 
 ---
 
-# ✅ Basic Testing
+# Basic Testing
 
 Basic reproducibility tests are included.
 
@@ -389,7 +389,7 @@ The tests verify:
 
   
 
-# ⚠️ Notes
+# Notes
 
 - `data_pipeline/` performs offline preprocessing
 - `app.py` is the online demo interface
@@ -398,7 +398,7 @@ The tests verify:
 
 ---
 
-# 🛠️ Troubleshooting
+# Troubleshooting
 
 ## Missing corpus.jsonl
 
@@ -440,7 +440,7 @@ The explanation layer is optional, and the final prediction still comes from the
 
 ---
 
-# 🧠 Key Takeaways
+# Key Takeaways
 
 - Temporal filtering is important in financial machine learning
 - Retrieval-based reasoning improves interpretability
@@ -449,7 +449,7 @@ The explanation layer is optional, and the final prediction still comes from the
 
 ---
 
-# 📌 Future Work
+# Future Work
 
 Possible future extensions include:
 
@@ -462,7 +462,7 @@ Possible future extensions include:
 
 ---
 
-# 👤 Author
+# Author
 
 Chi (Charlie) Zhang  
 M.A. Statistics (Machine Learning Track)  
@@ -470,7 +470,7 @@ Columbia University
 
 ---
 
-# ⭐ Course Information
+# Course Information
 
 Developed for:
 
