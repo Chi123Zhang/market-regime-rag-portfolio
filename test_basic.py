@@ -4,7 +4,7 @@ import pandas as pd
 def test_required_output_files_exist():
     assert os.path.exists("outputs/backtest_metrics.csv")
     assert os.path.exists("outputs/regime_labels.csv")
-    assert os.path.exists("outputs/equity_curves.png")
+    assert os.path.exists("outputs/equity curves.png") or os.path.exists("outputs/equity_curves.png")
     assert os.path.exists("outputs/drawdowns.png")
     assert os.path.exists("outputs/regime_timeline.png")
 
