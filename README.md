@@ -386,6 +386,23 @@ The tests verify:
 
 ---
 
+The repository includes lightweight automated tests for reproducibility verification.
+
+Run:
+
+```bash
+pytest tests/test_basic.py
+```
+
+The tests verify:
+
+- required output files exist
+- generated metrics are readable
+- regime label outputs contain the expected schema
+- core experiment outputs were successfully generated
+
+  
+
 # ⚠️ Notes
 
 - `data_pipeline/` performs offline preprocessing
